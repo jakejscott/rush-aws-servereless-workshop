@@ -6,6 +6,7 @@ import * as acm from '@aws-cdk/aws-certificatemanager';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as targets from '@aws-cdk/aws-route53-targets/lib';
 import * as s3 from '@aws-cdk/aws-s3';
+import * as cloudfront from '@aws-cdk/aws-cloudfront';
 
 export interface AwsServerlessWorkshopStackProps extends cdk.StackProps {
   domainName: string;
@@ -117,6 +118,24 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
     });
     new cdk.CfnOutput(this, 'SiteCertificateArn', { value: siteCertificate.certificateArn });
 
+    // CloudFront distribution that provides HTTPS
+    const distribution = new cloudfront.CloudFrontWebDistribution(this, 'SiteDistribution', {
+      aliasConfiguration: {
+        acmCertRef: siteCertificate.certificateArn,
+        names: [siteDomain],
+        sslMethod: cloudfront.SSLMethod.SNI,
+        securityPolicy: cloudfront.SecurityPolicyProtocol.TLS_V1_1_2016
+      },
+      originConfigs: [
+        {
+          s3OriginSource: {
+            s3BucketSource: siteBucket
+          },
+          behaviors: [{ isDefaultBehavior: true }]
+        }
+      ]
+    });
+    new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
 
   }
 }

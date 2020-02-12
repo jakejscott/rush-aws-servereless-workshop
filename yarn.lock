@@ -72,7 +72,7 @@
     "@aws-cdk/core" "1.23.0"
     "@aws-cdk/cx-api" "1.23.0"
 
-"@aws-cdk/aws-cloudfront@1.23.0":
+"@aws-cdk/aws-cloudfront@1.23.0", "@aws-cdk/aws-cloudfront@^1.23.0":
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudfront/-/aws-cloudfront-1.23.0.tgz#c348d545ef598d4f4f20902d3a45b386169c6d05"
   integrity sha512-8SwnpVcKHOscOYEgdXbHUGMCiCmobT/3BEa3o6T0a/quhHZ3ywusPVVMd9BewhymJ318NbxCzX85azfXiH4ATg==

@@ -492,3 +492,42 @@ new cdk.CfnOutput(this, "SiteCertificateArn", {
 yarn build
 cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
 ```
+
+## Create a Cloudfront distribution for our site
+
+🧶 We need to import the aws cloudfront cdk module
+
+```
+ yarn add @aws-cdk/aws-cloudfront
+```
+
+🖊️ Create a Cloudfront distribution
+
+```ts
+// File: lib/aws-serverless-workshop-stack.ts
+
+// CloudFront distribution that provides HTTPS
+const distribution = new cloudfront.CloudFrontWebDistribution(
+  this,
+  "SiteDistribution",
+  {
+    aliasConfiguration: {
+      acmCertRef: siteCertificate.certificateArn,
+      names: [siteDomain],
+      sslMethod: cloudfront.SSLMethod.SNI,
+      securityPolicy: cloudfront.SecurityPolicyProtocol.TLS_V1_1_2016
+    },
+    originConfigs: [
+      {
+        s3OriginSource: {
+          s3BucketSource: siteBucket
+        },
+        behaviors: [{ isDefaultBehavior: true }]
+      }
+    ]
+  }
+);
+new cdk.CfnOutput(this, "DistributionId", {
+  value: distribution.distributionId
+});
+```
