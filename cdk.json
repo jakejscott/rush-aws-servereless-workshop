@@ -1,0 +1,3 @@
+{
+  "app": "npx ts-node bin/rush-aws-servereless-workshop.ts"
+}
