@@ -2,6 +2,7 @@ import * as cdk from '@aws-cdk/core';
 import * as route53 from '@aws-cdk/aws-route53';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
+import * as acm from '@aws-cdk/aws-certificatemanager';
 
 export interface AwsServerlessWorkshopStackProps extends cdk.StackProps {
   domainName: string;
@@ -60,6 +61,12 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
     // Grant the Contact form lambda read and write permissions to the DynamoDB table.
     contactsTable.grantReadWriteData(createContactLambda);
 
+    // API Certificate
+    const apiCertificate = new acm.DnsValidatedCertificate(this, 'ApiCertificate', {
+      domainName: apiDomain,
+      hostedZone: zone
+    });
+    new cdk.CfnOutput(this, 'ApiCertificateArn', { value: apiCertificate.certificateArn });
 
   }
 }

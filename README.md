@@ -329,3 +329,35 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
 yarn build
 cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
 ```
+
+## Create a certificate for our API using Amazon certificate manager
+
+🧶 We need to import the acm cdk module.
+
+```
+yarn add @aws-cdk/aws-certificatemanager
+```
+
+🖊️ Create a DNS validated certificate
+
+```ts
+// File: lib/aws-serverless-workshop-stack.ts
+import * as acm from "@aws-cdk/aws-certificatemanager";
+
+// API Certificate
+const apiCertificate = new acm.DnsValidatedCertificate(this, "ApiCertificate", {
+  domainName: apiDomain,
+  hostedZone: zone
+});
+
+new cdk.CfnOutput(this, "ApiCertificateArn", {
+  value: apiCertificate.certificateArn
+});
+```
+
+🏃‍♀️ Deploy the api cert to dev
+
+```
+yarn build
+cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
+```
