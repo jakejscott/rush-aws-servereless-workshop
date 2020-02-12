@@ -1,5 +1,6 @@
 import * as cdk from '@aws-cdk/core';
 import * as route53 from '@aws-cdk/aws-route53';
+import * as dynamodb from '@aws-cdk/aws-dynamodb';
 
 export interface AwsServerlessWorkshopStackProps extends cdk.StackProps {
   domainName: string;
@@ -22,6 +23,20 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
 
     new cdk.CfnOutput(this, 'SiteUrl', { value: siteHttpsUrl });
     new cdk.CfnOutput(this, 'ApiUrl', { value: apiHttpsUrl });
+
+    const contactsTable = new dynamodb.Table(this, "ContactsTable", {
+      partitionKey: {
+        name: "pk",
+        type: dynamodb.AttributeType.STRING
+      },
+      sortKey: {
+        name: "sk",
+        type: dynamodb.AttributeType.STRING
+      },
+      tableName: props.subdomain + "-contacts",
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
 
   }
 }

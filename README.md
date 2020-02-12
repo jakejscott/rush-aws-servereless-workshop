@@ -47,6 +47,12 @@ CDKToolkit: creating CloudFormation changeset...
 git remote add origin git@github.com:jakejscott/rush-aws-serverelss-workshop.git
 ```
 
+⌚ Compile typescript code in the background
+
+```
+yarn watch
+```
+
 ## Let's start building our Stack!
 
 🧶 We need to import the aws route53 cdk module.
@@ -121,6 +127,7 @@ new RushAwsServerelessWorkshopStack(app, 'RushAwsServerelessWorkshopStack-cool-d
 🏃‍♀️ Synthesize and print out the Cloudformation stack
 
 ```sh
+yarn build
 cdk synthesize RushAwsServerelessWorkshopStack-cool-dev1 # <-- PUT YOUR TEAM NAME HERE!
 
 Outputs:
@@ -137,7 +144,8 @@ Resources:
 
 🏃‍♀️ Deploy the stack to dev environment
 
-```sh
+```
+yarn build
 cdk deploy RushAwsServerelessWorkshopStack-cool-dev1 # <-- PUT YOUR TEAM NAME HERE!
 
 RushAwsServerelessWorkshopStack-cool-dev1: deploying...
@@ -158,3 +166,71 @@ Stack ARN:
 arn:aws:cloudformation:ap-southeast-2:817613107166:stack/RushAwsServerelessWorkshopStack-cool-dev1/9ae21380-4ddd-11ea-aae5-066f346b367c
 ```
 
+## Creating a DynamoDB table!
+
+🧶 We need to import the aws dynamodb cdk module.
+
+```
+yarn add '@aws-cdk/aws-dynamodb'
+```
+
+🖊️ Add dynamo db table to our stack, paste this below the line the existing code we had from previous step
+
+```ts
+// File: lib/aws-serverless-workshop-stack.ts
+
+import * as cdk from "@aws-cdk/core";
+import * as route53 from "@aws-cdk/aws-route53";
+import * as dynamodb from "@aws-cdk/aws-dynamodb";
+
+export interface AwsServerlessWorkshopStackProps extends cdk.StackProps {
+  domainName: string;
+  subdomain: string;
+}
+
+export class RushAwsServerelessWorkshopStack extends cdk.Stack {
+  constructor(
+    scope: cdk.Construct,
+    id: string,
+    props: AwsServerlessWorkshopStackProps
+  ) {
+    super(scope, id, props);
+
+    // The code that defines your stack goes here
+
+    const zone = route53.HostedZone.fromLookup(this, "Zone", {
+      domainName: props.domainName
+    });
+
+    const siteDomain = props.subdomain + "." + props.domainName;
+    const apiDomain = "api." + props.subdomain + "." + props.domainName;
+
+    const siteHttpsUrl = "https://" + siteDomain;
+    const apiHttpsUrl = "https://" + apiDomain;
+
+    new cdk.CfnOutput(this, "SiteUrl", { value: siteHttpsUrl });
+    new cdk.CfnOutput(this, "ApiUrl", { value: apiHttpsUrl });
+
+    const contactsTable = new dynamodb.Table(this, "ContactsTable", {
+      partitionKey: {
+        name: "pk",
+        type: dynamodb.AttributeType.STRING
+      },
+      sortKey: {
+        name: "sk",
+        type: dynamodb.AttributeType.STRING
+      },
+      tableName: props.subdomain + "-contacts",
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+  }
+}
+```
+
+🏃‍♀️ Deploy the stack to dev environment
+
+```
+yarn build
+cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
+```

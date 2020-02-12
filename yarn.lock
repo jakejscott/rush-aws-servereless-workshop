@@ -11,11 +11,38 @@
     "@aws-cdk/core" "1.23.0"
     "@aws-cdk/cx-api" "1.23.0"
 
+"@aws-cdk/aws-applicationautoscaling@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-applicationautoscaling/-/aws-applicationautoscaling-1.23.0.tgz#ba04a2c21f288a6ed161b8fb13ffca554fe26f87"
+  integrity sha512-Z94siXGd6xR/gwCFCuLrQMk7lMUu56fs9W+fYIGLAFWDOKTvXahXpe0G8tQ74MzJFnj2jwAIYMK0SGFkgZU8+w==
+  dependencies:
+    "@aws-cdk/aws-autoscaling-common" "1.23.0"
+    "@aws-cdk/aws-cloudwatch" "1.23.0"
+    "@aws-cdk/aws-iam" "1.23.0"
+    "@aws-cdk/core" "1.23.0"
+
+"@aws-cdk/aws-autoscaling-common@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-autoscaling-common/-/aws-autoscaling-common-1.23.0.tgz#180cc0baa845694769aff71afa1d444241fc34dc"
+  integrity sha512-ieeFKui3MFg6aOdg0BsoaTTwRSp8l+4aet+UCwczeBMTLvxRg3G7BBuhNWlN0q7yXuhQbRo3TsASpWvIxrUz5w==
+  dependencies:
+    "@aws-cdk/aws-iam" "1.23.0"
+    "@aws-cdk/core" "1.23.0"
+
 "@aws-cdk/aws-cloudwatch@1.23.0":
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudwatch/-/aws-cloudwatch-1.23.0.tgz#6aea3ac124d5f53b59ad1a6494c8ab53a65fba7d"
   integrity sha512-JZEOfwpcHFqL5X8+Lj0BW23LcNlwH8MfI+DFXb9y2374knPCJQmRw92V/0SkcxtSUhPt7przDag0tsm0Eopkjw==
   dependencies:
+    "@aws-cdk/aws-iam" "1.23.0"
+    "@aws-cdk/core" "1.23.0"
+
+"@aws-cdk/aws-dynamodb@^1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-dynamodb/-/aws-dynamodb-1.23.0.tgz#294e4726e2013cebf9c5da142127a227c0cfa620"
+  integrity sha512-GBYqsxzkykdq0lZL64bBeiSAv87fLifIVeBivVaL8yD3GSK8gOmljuuFyCMCTLLLjIam/R2g6I5hExvsWhkxZQ==
+  dependencies:
+    "@aws-cdk/aws-applicationautoscaling" "1.23.0"
     "@aws-cdk/aws-iam" "1.23.0"
     "@aws-cdk/core" "1.23.0"
 
