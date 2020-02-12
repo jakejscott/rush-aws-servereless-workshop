@@ -137,5 +137,12 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
     });
     new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
 
+    // Route53 alias record for the CloudFront distribution
+    new route53.ARecord(this, 'SiteAliasRecord', {
+      recordName: siteDomain,
+      target: route53.AddressRecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      zone: zone
+    });
+
   }
 }

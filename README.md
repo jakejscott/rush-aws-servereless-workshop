@@ -531,3 +531,16 @@ new cdk.CfnOutput(this, "DistributionId", {
   value: distribution.distributionId
 });
 ```
+
+## Create a DNS record for our site
+
+```ts
+// Route53 alias record for the CloudFront distribution
+new route53.ARecord(this, "SiteAliasRecord", {
+  recordName: siteDomain,
+  target: route53.AddressRecordTarget.fromAlias(
+    new targets.CloudFrontTarget(distribution)
+  ),
+  zone: zone
+});
+```
