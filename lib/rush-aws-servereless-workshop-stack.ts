@@ -5,6 +5,7 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as acm from '@aws-cdk/aws-certificatemanager';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as targets from '@aws-cdk/aws-route53-targets/lib';
+import * as s3 from '@aws-cdk/aws-s3';
 
 export interface AwsServerlessWorkshopStackProps extends cdk.StackProps {
   domainName: string;
@@ -94,6 +95,18 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
       zone: zone
     });
 
+    //
+    // Frontend
+    //
 
+    // Content bucket
+    const siteBucket = new s3.Bucket(this, 'SiteBucket', {
+      bucketName: siteDomain,
+      websiteIndexDocument: 'index.html',
+      websiteErrorDocument: 'error.html',
+      publicReadAccess: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
+    });
+    new cdk.CfnOutput(this, 'Bucket', { value: siteBucket.bucketName });
   }
 }

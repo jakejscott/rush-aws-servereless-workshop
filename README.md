@@ -432,3 +432,36 @@ new route53.ARecord(this, "ApiAliasRecord", {
 yarn build
 cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
 ```
+
+## Hosting a static website using S3
+
+🧶 We need to import the aws s3 cdk module
+
+```
+yarn add @aws-cdk/aws-s3
+```
+
+🖊️ Create an bucket that we will use to host the static content
+
+```ts
+//
+// Frontend
+//
+
+// Content bucket
+const siteBucket = new s3.Bucket(this, "SiteBucket", {
+  bucketName: siteDomain,
+  websiteIndexDocument: "index.html",
+  websiteErrorDocument: "error.html",
+  publicReadAccess: true,
+  removalPolicy: cdk.RemovalPolicy.DESTROY
+});
+new cdk.CfnOutput(this, "Bucket", { value: siteBucket.bucketName });
+```
+
+🏃‍♀️ Deploy the content bucket to dev
+
+```
+yarn build
+cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
+```
