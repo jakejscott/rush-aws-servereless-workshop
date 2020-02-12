@@ -566,7 +566,7 @@ Build the React app
 ```
 cd frontend
 yarn install
-yarn buuild
+yarn build
 ```
 
 🖊️ Create a bucket deployment
