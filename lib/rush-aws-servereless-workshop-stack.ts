@@ -108,5 +108,15 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY
     });
     new cdk.CfnOutput(this, 'Bucket', { value: siteBucket.bucketName });
+
+    // TLS certificate for the website
+    const siteCertificate = new acm.DnsValidatedCertificate(this, 'SiteCertificate', {
+      domainName: siteDomain,
+      hostedZone: zone,
+      region: 'us-east-1'
+    });
+    new cdk.CfnOutput(this, 'SiteCertificateArn', { value: siteCertificate.certificateArn });
+
+
   }
 }

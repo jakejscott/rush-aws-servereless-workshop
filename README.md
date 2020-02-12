@@ -444,9 +444,7 @@ yarn add @aws-cdk/aws-s3
 🖊️ Create an bucket that we will use to host the static content
 
 ```ts
-//
-// Frontend
-//
+// File: lib/aws-serverless-workshop-stack.ts
 
 // Content bucket
 const siteBucket = new s3.Bucket(this, "SiteBucket", {
@@ -460,6 +458,35 @@ new cdk.CfnOutput(this, "Bucket", { value: siteBucket.bucketName });
 ```
 
 🏃‍♀️ Deploy the content bucket to dev
+
+```
+yarn build
+cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
+```
+
+## Create a certificate for our site
+
+🖊️ Create a DNS validated certificate
+
+```ts
+// File: lib/aws-serverless-workshop-stack.ts
+
+// TLS certificate for the website
+const siteCertificate = new acm.DnsValidatedCertificate(
+  this,
+  "SiteCertificate",
+  {
+    domainName: siteDomain,
+    hostedZone: zone,
+    region: "us-east-1"
+  }
+);
+new cdk.CfnOutput(this, "SiteCertificateArn", {
+  value: siteCertificate.certificateArn
+});
+```
+
+🏃‍♀️ Deploy the site cert to dev
 
 ```
 yarn build
