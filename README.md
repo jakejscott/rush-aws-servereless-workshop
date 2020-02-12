@@ -403,3 +403,32 @@ contactsResource.addMethod(
 yarn build
 cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
 ```
+
+## Create a DNS record in Route53 to point to API Gateway
+
+🧶 We need to import the route53-targets cdk module
+
+```
+yarn add @aws-cdk/aws-route53-targets
+```
+
+🖊️ Create an address record in Route53 aliasing to API Gateway endpoint
+
+```ts
+// File: lib/aws-serverless-workshop-stack.ts
+import * as targets from "@aws-cdk/aws-route53-targets/lib";
+
+// Route53 alias record for the CloudFront distribution
+new route53.ARecord(this, "ApiAliasRecord", {
+  recordName: apiDomain,
+  target: route53.AddressRecordTarget.fromAlias(new targets.ApiGateway(api)),
+  zone: zone
+});
+```
+
+🏃‍♀️ Deploy the DNS change to dev
+
+```
+yarn build
+cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
+```

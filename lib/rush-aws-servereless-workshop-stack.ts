@@ -4,6 +4,7 @@ import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as acm from '@aws-cdk/aws-certificatemanager';
 import * as apigateway from '@aws-cdk/aws-apigateway';
+import * as targets from '@aws-cdk/aws-route53-targets/lib';
 
 export interface AwsServerlessWorkshopStackProps extends cdk.StackProps {
   domainName: string;
@@ -85,5 +86,14 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
 
     const contactsResource = api.root.addResource('contacts');
     contactsResource.addMethod('POST', new apigateway.LambdaIntegration(createContactLambda));
+
+    // Route53 alias record to the API Gateway
+    new route53.ARecord(this, "ApiAliasRecord", {
+      recordName: apiDomain,
+      target: route53.AddressRecordTarget.fromAlias(new targets.ApiGateway(api)),
+      zone: zone
+    });
+
+
   }
 }
