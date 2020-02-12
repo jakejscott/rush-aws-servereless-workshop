@@ -561,7 +561,7 @@ yarn add @aws-cdk/aws-s3-deployment
 ./frontend/.env
 ```
 
-Build the React app
+💰💰💰 Build the React app 💰💰💰
 
 ```
 cd frontend
