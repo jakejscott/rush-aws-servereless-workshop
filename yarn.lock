@@ -20,6 +20,17 @@
     "@aws-cdk/cx-api" "1.23.0"
     minimatch "^3.0.4"
 
+"@aws-cdk/aws-apigateway@^1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-apigateway/-/aws-apigateway-1.23.0.tgz#d248dff556d4c88f6db0d14a51c0c8b7560c43a7"
+  integrity sha512-s0WxB4JIlLRGZbE6Wqbxf2hd7y/sckxMz9fmFmP9Fi1DM5O6iTF9mS7P7ek+R5PWN4Kr3jztihVCbwkaL7L22g==
+  dependencies:
+    "@aws-cdk/aws-certificatemanager" "1.23.0"
+    "@aws-cdk/aws-elasticloadbalancingv2" "1.23.0"
+    "@aws-cdk/aws-iam" "1.23.0"
+    "@aws-cdk/aws-lambda" "1.23.0"
+    "@aws-cdk/core" "1.23.0"
+
 "@aws-cdk/aws-applicationautoscaling@1.23.0":
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-applicationautoscaling/-/aws-applicationautoscaling-1.23.0.tgz#ba04a2c21f288a6ed161b8fb13ffca554fe26f87"
@@ -38,7 +49,7 @@
     "@aws-cdk/aws-iam" "1.23.0"
     "@aws-cdk/core" "1.23.0"
 
-"@aws-cdk/aws-certificatemanager@^1.23.0":
+"@aws-cdk/aws-certificatemanager@1.23.0", "@aws-cdk/aws-certificatemanager@^1.23.0":
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-certificatemanager/-/aws-certificatemanager-1.23.0.tgz#79ad8759e3198a0c804601aaa240cd7a38e3e8f1"
   integrity sha512-AB7DkEiIZL610GX6I6LMOVucudabYPP5iKIdcTOGiEdyGKEiBzgYieIXIoCmf+UBOHIUVAkB+1/kEfdU4YSrOg==
@@ -88,6 +99,19 @@
     "@aws-cdk/aws-ssm" "1.23.0"
     "@aws-cdk/core" "1.23.0"
     "@aws-cdk/cx-api" "1.23.0"
+
+"@aws-cdk/aws-elasticloadbalancingv2@1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-elasticloadbalancingv2/-/aws-elasticloadbalancingv2-1.23.0.tgz#151a362b2a40fe1ccf316dbc3f671f58b3674714"
+  integrity sha512-YjZR/uZbtLQnqOtor4cGFKIx6ZUI7/RWyVmgsNIi2MgjQt3inO+vjH8xcpnXKAGFWU8C3lrgLjWwztMZFjQGMw==
+  dependencies:
+    "@aws-cdk/aws-certificatemanager" "1.23.0"
+    "@aws-cdk/aws-cloudwatch" "1.23.0"
+    "@aws-cdk/aws-ec2" "1.23.0"
+    "@aws-cdk/aws-iam" "1.23.0"
+    "@aws-cdk/aws-lambda" "1.23.0"
+    "@aws-cdk/aws-s3" "1.23.0"
+    "@aws-cdk/core" "1.23.0"
 
 "@aws-cdk/aws-events@1.23.0":
   version "1.23.0"

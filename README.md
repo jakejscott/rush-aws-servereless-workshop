@@ -361,3 +361,45 @@ new cdk.CfnOutput(this, "ApiCertificateArn", {
 yarn build
 cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
 ```
+
+## Create an API Gateway to expose our contact lambda.
+
+🧶 We need to import the api gateway cdk module
+
+```
+yarn add @aws-cdk/aws-apigateway
+```
+
+🖊️ Create an API Gateway
+
+```ts
+// File: lib/aws-serverless-workshop-stack.ts
+import * as apigateway from "@aws-cdk/aws-apigateway";
+
+// API Gateway
+const api = new apigateway.RestApi(this, "ContactsApi", {
+  restApiName: props.subdomain + "-contacts-api",
+  defaultCorsPreflightOptions: {
+    allowOrigins: [siteHttpsUrl],
+    allowMethods: ["*"],
+    allowHeaders: ["*"]
+  },
+  domainName: {
+    certificate: apiCertificate,
+    domainName: apiDomain
+  }
+});
+
+const contactsResource = api.root.addResource("contacts");
+contactsResource.addMethod(
+  "POST",
+  new apigateway.LambdaIntegration(createContactLambda)
+);
+```
+
+🏃‍♀️ Deploy the api gateway to dev
+
+```
+yarn build
+cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
+```

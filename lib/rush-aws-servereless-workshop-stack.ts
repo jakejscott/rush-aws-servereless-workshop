@@ -3,6 +3,7 @@ import * as route53 from '@aws-cdk/aws-route53';
 import * as dynamodb from '@aws-cdk/aws-dynamodb';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as acm from '@aws-cdk/aws-certificatemanager';
+import * as apigateway from '@aws-cdk/aws-apigateway';
 
 export interface AwsServerlessWorkshopStackProps extends cdk.StackProps {
   domainName: string;
@@ -68,5 +69,21 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
     });
     new cdk.CfnOutput(this, 'ApiCertificateArn', { value: apiCertificate.certificateArn });
 
+    // API Gateway
+    const api = new apigateway.RestApi(this, 'ContactsApi', {
+      restApiName: props.subdomain + "-contacts-api",
+      defaultCorsPreflightOptions: {
+        allowOrigins: [siteHttpsUrl],
+        allowMethods: ["*"],
+        allowHeaders: ["*"],
+      },
+      domainName: {
+        certificate: apiCertificate,
+        domainName: apiDomain
+      }
+    });
+
+    const contactsResource = api.root.addResource('contacts');
+    contactsResource.addMethod('POST', new apigateway.LambdaIntegration(createContactLambda));
   }
 }
