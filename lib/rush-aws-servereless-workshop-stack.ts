@@ -7,6 +7,7 @@ import * as apigateway from '@aws-cdk/aws-apigateway';
 import * as targets from '@aws-cdk/aws-route53-targets/lib';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as cloudfront from '@aws-cdk/aws-cloudfront';
+import * as s3deploy from '@aws-cdk/aws-s3-deployment';
 
 export interface AwsServerlessWorkshopStackProps extends cdk.StackProps {
   domainName: string;
@@ -142,6 +143,14 @@ export class RushAwsServerelessWorkshopStack extends cdk.Stack {
       recordName: siteDomain,
       target: route53.AddressRecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
       zone: zone
+    });
+
+    // Deploy site contents to S3 bucket
+    new s3deploy.BucketDeployment(this, 'DeployWithInvalidation', {
+      sources: [s3deploy.Source.asset('./frontend/build')],
+      destinationBucket: siteBucket,
+      distribution,
+      distributionPaths: ['/*'],
     });
 
   }

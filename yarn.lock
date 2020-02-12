@@ -219,6 +219,19 @@
     "@aws-cdk/core" "1.23.0"
     "@aws-cdk/cx-api" "1.23.0"
 
+"@aws-cdk/aws-s3-deployment@^1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-s3-deployment/-/aws-s3-deployment-1.23.0.tgz#fd4710ae0da8e16b5bb3e044760f4b12584708fa"
+  integrity sha512-YvNWfDpbRB06pk93Muk45tOTdPZrKTQRgldYVMlqcu8rmyz1VSHZtyJkvapmiFN5Mzm3n3e6u0wTaBvSeExyiA==
+  dependencies:
+    "@aws-cdk/aws-cloudformation" "1.23.0"
+    "@aws-cdk/aws-cloudfront" "1.23.0"
+    "@aws-cdk/aws-iam" "1.23.0"
+    "@aws-cdk/aws-lambda" "1.23.0"
+    "@aws-cdk/aws-s3" "1.23.0"
+    "@aws-cdk/aws-s3-assets" "1.23.0"
+    "@aws-cdk/core" "1.23.0"
+
 "@aws-cdk/aws-s3@1.23.0", "@aws-cdk/aws-s3@^1.23.0":
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-s3/-/aws-s3-1.23.0.tgz#6b9c95002f87dee630ca3f3b3517f099aeb2613f"

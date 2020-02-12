@@ -534,6 +534,8 @@ new cdk.CfnOutput(this, "DistributionId", {
 
 ## Create a DNS record for our site
 
+🖊️ Create a DNS record which is an alias to the cloudfront endpoint
+
 ```ts
 // Route53 alias record for the CloudFront distribution
 new route53.ARecord(this, "SiteAliasRecord", {
@@ -543,4 +545,45 @@ new route53.ARecord(this, "SiteAliasRecord", {
   ),
   zone: zone
 });
+```
+
+## Upload our React app to S3 Bucket
+
+🧶 We need to import the aws s3 deployment cdk module
+
+```
+yarn add @aws-cdk/aws-s3-deployment
+```
+
+🔥🔥🔥 We need to edit the `REACT_APP_API_HTTPS_URL` environment variable in the frontend to point to our API endpoint
+
+```
+./frontend/.env
+```
+
+Build the React app
+
+```
+cd frontend
+yarn install
+yarn buuild
+```
+
+🖊️ Create a bucket deployment
+
+```ts
+// Deploy site contents to S3 bucket
+new s3deploy.BucketDeployment(this, "DeployWithInvalidation", {
+  sources: [s3deploy.Source.asset("./frontend/build")],
+  destinationBucket: siteBucket,
+  distribution,
+  distributionPaths: ["/*"]
+});
+```
+
+🏃‍♀️ Deploy the site!
+
+```
+yarn build
+cdk deploy RushAwsServerelessWorkshopStack-cool-dev1
 ```
