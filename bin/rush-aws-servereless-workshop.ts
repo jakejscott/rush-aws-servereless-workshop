@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
-import { RushAwsServerelessWorkshopStack } from '../lib/rush-aws-servereless-workshop-stack';
+import { RushAwsServerelessWorkshopStack } from '../lib/rush-aws-serverless-workshop-stack';
 
 const app = new cdk.App();
 
