@@ -19,6 +19,7 @@ yarn global add aws-cdk
 ```
 mkdir rush-aws-serverless-workshop
 cd rush-aws-serverless-workshop
+cdk init app --language typescript
 yarn install
 yarn build
 ```
